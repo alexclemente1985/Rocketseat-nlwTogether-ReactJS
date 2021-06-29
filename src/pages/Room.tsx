@@ -1,5 +1,4 @@
 import React, { FormEvent, useState } from 'react';
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import logoImg from '../assets/images/logo.svg';
 import Button from '../components/Button';
@@ -9,7 +8,6 @@ import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
 import { database } from '../services/firebase';
 import "../styles/room.scss";
-import likeSvg from "../assets/images/like.svg";
 
 type RoomParams = {
   id:string;

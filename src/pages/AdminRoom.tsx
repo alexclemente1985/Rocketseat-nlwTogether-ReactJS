@@ -4,7 +4,7 @@ import logoImg from '../assets/images/logo.svg';
 import Button from '../components/Button';
 import Question from '../components/Question';
 import RoomCode from '../components/RoomCode';
-//import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
 import { database } from '../services/firebase';
 import "../styles/room.scss";
@@ -15,7 +15,7 @@ type RoomParams = {
 }
 
 const AdminRoom: React.FC = () => {
-  //const {user, signInWithGoogle} = useAuth();
+ const {user, signInWithGoogle} = useAuth();
   const params = useParams<RoomParams>();
   //const [newQuestion, setNewQuestion] = useState('');
   const roomId = params.id;
@@ -25,6 +25,10 @@ const AdminRoom: React.FC = () => {
   const history = useHistory();
 
   async function handleEndRoom(){
+    if(!user){
+      await signInWithGoogle();
+    }
+
     await database.ref(`rooms/${roomId}`).update({
       endedAt: new Date()
     });
@@ -32,31 +36,10 @@ const AdminRoom: React.FC = () => {
     history.push('/');
   }
 
-  // async function handleSendQuestion(e: FormEvent){
-  //   e.preventDefault();
-  //   if(newQuestion.trim() === ''){
-  //     return;
-  //   }
-
-  //   if(!user){
-  //     throw new Error('You must be logged in')
-  //   }
-
-  //   const question = {
-  //     content: newQuestion,
-  //     author: {
-  //       name: user.name,
-  //       avatar: user.avatar,
-  //     },
-  //     isHighlighted: false,
-  //     isAnswered: false
-  //   };
-
-  //   await database.ref(`rooms/${roomId}/questions`).push(question);
-  //   setNewQuestion('');
-  // }
-
   async function handleDeleteQuestion(questionId: string){
+    if(!user){
+      await signInWithGoogle();
+    }
     if(window.confirm('Tem certeza que você deseja excluir esta pergunta ?')){
       await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
     }
