@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import cnames from 'classnames';
 import '../styles/question.scss';
 
 type QuestionProps = {
@@ -8,12 +9,20 @@ type QuestionProps = {
     avatar: string;
   }
   children?: ReactNode;
+  isAnswered?: boolean;
+  isHighlighted?: boolean;
 }
 
-const Question: React.FC<QuestionProps> = ({content,author, children}:QuestionProps) => {
+const Question: React.FC<QuestionProps> = ({
+  content,
+  author, 
+  children,
+  isAnswered = false,
+  isHighlighted = false
+}:QuestionProps) => {
   
   return (
-  <div className="question">
+  <div className={cnames('question',{answered: isAnswered}, {highlighted: isHighlighted && !isAnswered})}>
     <p>{content}</p>
     <footer>
       <div className="user-info">
