@@ -9,7 +9,7 @@ import { useAuth } from '../hooks/useAuth';
 import { database } from '../services/firebase';
 
 const Home: React.FC = () => {
-   
+
   const history = useHistory();
   const {user, signInWithGoogle} = useAuth();
   const [roomCode,setRoomCode] = useState('');
@@ -53,16 +53,16 @@ const Home: React.FC = () => {
     <main>
         <div className="main-content">
           <img src={logoImg} alt="Letmeask"/>
-          <p>by Alexandre Pinheiro</p>
+          <p>by Alexandre C. Pinheiro</p>
           <button className="create-room" onClick={handleCreateRoom}>
             <img src={googleIconImg} alt="Logo do Google"/>
             Crie sua sala com o Google
           </button>
           <div className="separator">ou entre em uma sala</div>
           <form onSubmit={handleJoinRoom}>
-            <input 
-            type="text" 
-            placeholder="Digite o código da sala" 
+            <input
+            type="text"
+            placeholder="Digite o código da sala"
             onChange={event => setRoomCode(event.target.value)}
             />
             <Button type="submit">Entrar na sala</Button>
